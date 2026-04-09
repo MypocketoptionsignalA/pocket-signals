@@ -3,13 +3,13 @@ import logging
 import random
 from datetime import datetime
 import pytz
+import os
 
 from telegram import Update, InlineKeyboardButton, InlineKeyboardMarkup
 from telegram.ext import Application, CommandHandler, CallbackQueryHandler, ContextTypes
 
 # Configuration
-TOKEN = '8704584052:AAEyEwepkfVjBEFvR02-zv7PXEWEX8LmFMI'
-CHAT_ID = '8021649806' # Still useful for direct messages if needed, but for interactive, responses go to the user's chat
+TOKEN = os.getenv('BOT_TOKEN', '8704584052:AAEyEwepkfVjBEFvR02-zv7PXEWEX8LmFMI')
 
 OTC_PAIRS = [
     'USDJPY OTC',
@@ -84,6 +84,10 @@ async def handle_timeframe_selection(update: Update, context: ContextTypes.DEFAU
 
 def main() -> None:
     """Run the bot."""
+    if not TOKEN:
+        logger.error("No BOT_TOKEN found in environment variables!")
+        return
+
     application = Application.builder().token(TOKEN).build()
 
     application.add_handler(CommandHandler("start", start))
@@ -91,6 +95,7 @@ def main() -> None:
     application.add_handler(CallbackQueryHandler(handle_timeframe_selection, pattern='^TF_'))
 
     # Start the Bot
+    logger.info("Starting bot...")
     application.run_polling(allowed_updates=Update.ALL_TYPES)
 
 if __name__ == '__main__':
