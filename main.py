@@ -17,6 +17,11 @@ OTC_PAIRS = [
     "GBPJPY OTC",
     "EURUSD OTC",
     "AUDUSD OTC",
+    "AUDCAD OTC",
+    "NZDUSD OTC",
+    "EURGBP OTC",
+    "USDCAD OTC",
+    "USDCHF OTC",
 ]
 
 SIGNAL_TIMEFRAMES = [
@@ -31,33 +36,13 @@ logging.basicConfig(format="%(asctime)s - %(name)s - %(levelname)s - %(message)s
 logger = logging.getLogger(__name__)
 
 async def generate_signal(pair: str, timeframe: str) -> str:
-    """Simulates generating a professional BUY/SELL signal with enhanced details."""
+    """Simulates generating a professional BUY/SELL signal with a clean layout."""
     signal_type = random.choice(["BUY", "SELL"])
     
-    # Simulate professional trading details
-    accuracy = random.randint(85, 98) # Simulated accuracy percentage
-    strength = random.randint(60, 95) # Simulated signal strength
-    
-    # Generate a visual strength bar
-    strength_bar = """
-    """
-    filled_blocks = int(strength / 10)
-    strength_bar = "💎 " + "█" * filled_blocks + "░" * (10 - filled_blocks) + f" {strength}%"
-
-    # Simulate entry, TP, SL prices (example values, not real)
-    entry_price = round(random.uniform(1.0000, 1.5000), 4)
-    take_profit = round(entry_price + (0.0010 * random.uniform(0.5, 2.0) * (1 if signal_type == "BUY" else -1)), 4)
-    stop_loss = round(entry_price - (00.0005 * random.uniform(0.5, 2.0) * (1 if signal_type == "BUY" else -1)), 4)
-
     return (
         f"**{signal_type} SIGNAL!** 🔥\n"
         f"**Pair:** {pair}\n"
         f"**Timeframe:** {timeframe}\n"
-        f"**Accuracy:** {accuracy}% 📈\n"
-        f"**Strength:** {strength_bar}\n"
-        f"**Entry Price:** {entry_price}\n"
-        f"**Take Profit:** {take_profit} 🎯\n"
-        f"**Stop Loss:** {stop_loss} 🛡️\n"
         f"**Enter NOW!** ⏰"
     )
 
