@@ -36,39 +36,30 @@ logging.basicConfig(format="%(asctime)s - %(name)s - %(levelname)s - %(message)s
 logger = logging.getLogger(__name__)
 
 async def generate_signal(pair: str, timeframe: str) -> str:
-    """Simulates generating an Elite Professional BUY/SELL signal with enhanced details."""
+    """Simulates generating an Ultra-Fast, high-impact BUY/SELL signal."""
     signal_type = random.choice(["BUY", "SELL"])
     
-    # Simulated Elite Professional details
-    confidence_levels = ["Low ⚪", "Medium 🟡", "High 🟢", "Very High 💎"]
-    confidence = random.choice(confidence_levels)
-
-    trend_types = ["Strong Bullish 📈", "Weak Bullish ↗️", "Sideways ↔️", "Weak Bearish ↘️", "Strong Bearish 📉"]
-    trend = random.choice(trend_types)
-
-    volatility_levels = ["Low 💨", "Medium 🌊", "High 🌪️"]
-    volatility = random.choice(volatility_levels)
-
-    signal_id = f"#SIG-{random.randint(1000, 9999)}"
-
     return (
         f"**{signal_type} SIGNAL!** 🔥\n"
         f"**Pair:** {pair}\n"
         f"**Timeframe:** {timeframe}\n"
-        f"**Confidence:** {confidence}\n"
-        f"**Trend:** {trend}\n"
-        f"**Volatility:** {volatility}\n"
-        f"**Signal ID:** {signal_id}\n"
         f"**Enter NOW!** ⏰"
     )
 
 async def start(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
-    """Sends a message with inline buttons for OTC pairs."""
-    keyboard = [
-        [InlineKeyboardButton(pair, callback_data=f"PAIR_{pair}")] for pair in OTC_PAIRS
-    ]
+    """Sends a message with inline buttons for OTC pairs in a square layout."""
+    keyboard = []
+    for i in range(0, len(OTC_PAIRS), 2):
+        row = []
+        if i < len(OTC_PAIRS):
+            row.append(InlineKeyboardButton(OTC_PAIRS[i], callback_data=f"PAIR_{OTC_PAIRS[i]}"))
+        if i + 1 < len(OTC_PAIRS):
+            row.append(InlineKeyboardButton(OTC_PAIRS[i+1], callback_data=f"PAIR_{OTC_PAIRS[i+1]}"))
+        if row:
+            keyboard.append(row)
+
     reply_markup = InlineKeyboardMarkup(keyboard)
-    await update.message.reply_text("**Welcome to the Elite Professional Signal Bot!** 💎\n\nChoose an OTC pair to get a signal:", reply_markup=reply_markup, parse_mode="Markdown")
+    await update.message.reply_text("**Welcome to the Ultra-Fast Signal Bot!** ⚡\n\nChoose an OTC pair to get a signal:", reply_markup=reply_markup, parse_mode="Markdown")
 
 async def handle_pair_selection(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
     """Handles the selected OTC pair and prompts for timeframe."""
@@ -106,10 +97,17 @@ async def handle_timeframe_selection(update: Update, context: ContextTypes.DEFAU
 
     await query.edit_message_text(text=full_message, parse_mode="Markdown")
 
-    # Offer to choose another pair
-    keyboard = [
-        [InlineKeyboardButton(pair, callback_data=f"PAIR_{pair}")] for pair in OTC_PAIRS
-    ]
+    # Offer to choose another pair with square layout
+    keyboard = []
+    for i in range(0, len(OTC_PAIRS), 2):
+        row = []
+        if i < len(OTC_PAIRS):
+            row.append(InlineKeyboardButton(OTC_PAIRS[i], callback_data=f"PAIR_{OTC_PAIRS[i]}"))
+        if i + 1 < len(OTC_PAIRS):
+            row.append(InlineKeyboardButton(OTC_PAIRS[i+1], callback_data=f"PAIR_{OTC_PAIRS[i+1]}"))
+        if row:
+            keyboard.append(row)
+
     reply_markup = InlineKeyboardMarkup(keyboard)
     await query.message.reply_text("Choose another OTC pair:", reply_markup=reply_markup, parse_mode="Markdown")
 
