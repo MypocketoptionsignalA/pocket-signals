@@ -12,16 +12,21 @@ from telegram.ext import Application, CommandHandler, CallbackQueryHandler, Cont
 TOKEN = os.getenv("BOT_TOKEN", "8704584052:AAEyEwepkfVjBEFvR02-zv7PXEWEX8LmFMI")
 
 OTC_PAIRS = [
-    "USDJPY OTC",
-    "GBPUSD OTC",
-    "GBPJPY OTC",
-    "EURUSD OTC",
-    "AUDUSD OTC",
-    "AUDCAD OTC",
-    "NZDUSD OTC",
-    "EURGBP OTC",
-    "USDCAD OTC",
-    "USDCHF OTC",
+    "USD/JPY OTC",
+    "GBP/USD OTC",
+    "EUR/USD OTC",
+    "AUD/USD OTC",
+    "GBP/JPY OTC",
+    "AUD/CAD OTC",
+    "NZD/USD OTC",
+    "EUR/GBP OTC",
+    "USD/CAD OTC",
+    "USD/CHF OTC",
+    "EUR/JPY OTC",
+    "CAD/JPY OTC",
+    "AUD/NZD OTC",
+    "GBP/AUD OTC",
+    "EUR/AUD OTC",
 ]
 
 SIGNAL_TIMEFRAMES = [
@@ -59,7 +64,7 @@ async def start(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
             keyboard.append(row)
 
     reply_markup = InlineKeyboardMarkup(keyboard)
-    await update.message.reply_text("**Welcome to the Ultra-Fast Signal Bot!** ⚡\n\nChoose an OTC pair to get a signal:", reply_markup=reply_markup, parse_mode="Markdown")
+    await update.message.reply_text("**Welcome to the Elite Ultra-Fast Signal Bot!** ⚡\n\nChoose an OTC pair to get a signal:", reply_markup=reply_markup, parse_mode="Markdown")
 
 async def handle_pair_selection(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
     """Handles the selected OTC pair and prompts for timeframe."""
