@@ -27,6 +27,7 @@ OTC_PAIRS = {
     "AUD/NZD OTC": "🇦🇺🇳🇿",
     "GBP/AUD OTC": "🇬🇧🇦🇺",
     "EUR/AUD OTC": "🇪🇺🇦🇺",
+    "BHD/CNY OTC": "🇧🇭🇨🇳", # New pair added
 }
 
 SIGNAL_TIMEFRAMES = {
