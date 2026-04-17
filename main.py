@@ -27,7 +27,7 @@ OTC_PAIRS = {
     "AUD/NZD OTC": "🇦🇺🇳🇿",
     "GBP/AUD OTC": "🇬🇧🇦🇺",
     "EUR/AUD OTC": "🇪🇺🇦🇺",
-    "BHD/CNY OTC": "🇧🇭🇨🇳", # New pair added
+    "BHD/CNY OTC": "🇧🇭🇨🇳",
 }
 
 SIGNAL_TIMEFRAMES = {
@@ -45,35 +45,19 @@ logging.basicConfig(format="%(asctime)s - %(name)s - %(levelname)s - %(message)s
 logger = logging.getLogger(__name__)
 
 async def generate_signal(pair: str, timeframe: str) -> str:
-    """Simulates generating an Elite Pro Max signal with advanced details."""
+    """Simulates generating an Ultra-Fast, high-impact BUY/SELL signal without extra details."""
     signal_type = random.choice(["BUY", "SELL"])
     
     if signal_type == "BUY":
         signal_emoji = "🟢 BUY SIGNAL! 🟢"
-        sentiment_emoji = "📈"
-        sentiment_text = "BULLISH"
     else:
         signal_emoji = "🔴 SELL SIGNAL! 🔴"
-        sentiment_emoji = "📉"
-        sentiment_text = "BEARISH"
-
-    # Simulated values for Elite Pro Max features
-    power_meter = random.randint(70, 95) # 70-95% power
-    sentiment_value = random.randint(60, 90) # 60-90% sentiment
-    volatility_level = random.choice(["LOW 🟢", "MEDIUM 🟡", "HIGH 🔴"])
-    signal_id = f"#VIP-{random.randint(1000, 9999)}"
-
-    power_bar = "█" * (power_meter // 10) + "░" * (10 - (power_meter // 10))
 
     return (
         f"**{signal_emoji}**\n"
         f"**Asset:** {pair} 💎\n"
         f"**Expiry:** {timeframe} ⏱️\n"
-        f"**Action:** Enter NOW! 🔥\n\n"
-        f"**POWER:** [{power_bar}] {power_meter}% 💪\n"
-        f"**SENTIMENT:** {sentiment_value}% {sentiment_text} {sentiment_emoji}\n"
-        f"**VOLATILITY:** {volatility_level} 🌪️\n"
-        f"**VERIFIED:** {signal_id} ✅"
+        f"**Action:** Enter NOW! 🔥"
     )
 
 async def start(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
@@ -92,7 +76,7 @@ async def start(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
             keyboard.append(row)
 
     reply_markup = InlineKeyboardMarkup(keyboard)
-    await update.message.reply_text("**Welcome to the Elite Pro Max Signal Bot!** 💎🚀\n\nChoose your preferred **OTC Asset**:", reply_markup=reply_markup, parse_mode="Markdown")
+    await update.message.reply_text("**Welcome to the Elite Signal Bot!** 💎🚀\n\nChoose your preferred **OTC Asset**:", reply_markup=reply_markup, parse_mode="Markdown")
 
 async def handle_pair_selection(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
     """Handles the selected OTC pair and prompts for timeframe with emojis."""
